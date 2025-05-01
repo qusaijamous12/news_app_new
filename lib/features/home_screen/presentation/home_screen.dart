@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/spacing_manger/spacing_manger.dart';
 import '../../../core/theming/color_manger.dart';
 import '../../../core/theming/text_style.dart';
 import '../../../core/widgets/my_text_button.dart';
+import '../logic/home_cubit.dart';
+import '../logic/home_state.dart';
 import 'widgets/build_animal_view.dart';
 import 'widgets/build_category.dart';
 import 'widgets/build_row_user_data.dart';
@@ -37,22 +40,32 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: Padding(
-          padding: const EdgeInsets.all(SpacingManger.kPadding/1.5),
-          child: Column(
-            children: [
-              const BuildRowUserData(),
-              verticalSpace(SpacingManger.kPadding),
-              const BuildAnimalView(),
-              verticalSpace(SpacingManger.kPadding),
-              const  Expanded(child:   TabBarController()),
-            ],
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context,state){},
+      builder: (context, state){
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.black,
+            body: Padding(
+              padding: const EdgeInsets.all(SpacingManger.kPadding/1.5),
+              child: Column(
+                children: [
+                  if(state is HomeLoadingState)...[
+                    const Center(child: CircularProgressIndicator())
+                  ] else...[
+                    const BuildRowUserData(),
+                    verticalSpace(SpacingManger.kPadding),
+                    const BuildAnimalView(),
+                    verticalSpace(SpacingManger.kPadding),
+                    const  Expanded(child:   TabBarController()),
+                  ]
+
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

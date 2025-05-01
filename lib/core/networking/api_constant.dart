@@ -1,3 +1,10 @@
 class ApiConstant{
-  static const String apiKey='7857d908aca74a29ac0f3d7059d58e25';
+  static const String apiUrl='http://newsapi.runasp.net/api/';
+  static const String banners='Banners';
+
+
+
 }
+
+//To Make for model generate code we will use json anotation and json serilizable with build runner
+// then you have to run flutter pub run build_runner build
